@@ -1,6 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+
 from app.database import Base, engine
+from app.routers import resumes
+
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
@@ -15,6 +18,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(resumes.router)
 
 @app.get("/")
 def read_root() -> dict[str, str]:
