@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.database import Base, engine
 from app.routers import resumes
+from app.routers import interviews
 
 Base.metadata.create_all(bind=engine)
 
@@ -20,6 +21,7 @@ app.add_middleware(
 )
 
 app.include_router(resumes.router)
+app.include_router(interviews.router)
 
 @app.get("/")
 def read_root() -> dict[str, str]:
